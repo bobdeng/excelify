@@ -46,7 +46,7 @@ class ExportFormTest {
         exportForm = new Excelify(json, new byte[0]);
         assertEquals("张三", exportForm.readStringFromJson("list[0].name"));
         assertEquals("李四", exportForm.readStringFromJson("list[1].name"));
-        assertEquals("", exportForm.readStringFromJson("list[1].notExist"));
+        assertEquals("No results for path: $['list'][1]['notExist']", exportForm.readStringFromJson("list[1].notExist"));
         assertEquals("海洋学院", exportForm.readStringFromJson("name"));
     }
 

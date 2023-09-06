@@ -25,7 +25,7 @@ public class Excelify {
     }
 
     public void write(OutputStream outputStream) throws IOException {
-        XSSFWorkbook workbook = readWorkbookFromTemplate();
+        XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(templateFileBytes));
         expandAllArrayPlaceholders(workbook.getSheetAt(0));
         fillAllPlaceholders(workbook.getSheetAt(0));
         workbook.write(outputStream);
@@ -42,10 +42,6 @@ public class Excelify {
         while (isNeedExpand(sheet)) {
             expandArray(sheet);
         }
-    }
-
-    private XSSFWorkbook readWorkbookFromTemplate() throws IOException {
-        return new XSSFWorkbook(new ByteArrayInputStream(templateFileBytes));
     }
 
     private void expandArray(XSSFSheet sheet) {
@@ -89,8 +85,7 @@ public class Excelify {
         try {
             return JsonPath.read(getDocument(), "$." + name).toString();
         } catch (Exception e) {
-            e.printStackTrace();
-            return "";
+            return e.getMessage();
         }
     }
 
